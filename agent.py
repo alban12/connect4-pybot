@@ -264,6 +264,14 @@ def my_agent(obs, config):
     valid_moves = [c for c in range(config.columns) if obs.board[c] == 0]
     # Convert the board to a 2D grid
     grid = np.asarray(obs.board).reshape(config.rows, config.columns)
+      
+      
+      
+    # Make use of the weight of the trained with Monte Carlo network by giving it the grid 
+    # my_net = initiliaze the network with the weights 
+    # move = my_net.predict(grid)
+    # return move
+    
     # Use the heuristic to assign a score to each possible board in the next step
     scores = dict(zip(valid_moves, [score_move_ab(grid, col, obs.mark, config, N_STEPS) for col in valid_moves]))    #Alpha_beta choice
     #scores = dict(zip(valid_moves, [score_move_ntt(grid, col, obs.mark, config, N_STEPS) for col in valid_moves])) #Negamax with TT choice
