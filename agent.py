@@ -227,34 +227,7 @@ def my_agent(obs, config):
             ttEntry[1]="EXACT"
         ttEntry[2]=depth
         transpositionTableStore(node, ttEntry)
-        return value
-        
-    #iterative_deepening 
-
-                        #def score_move_with_id(grid, col, mark, config, nsteps)
-
-                        #def iterative_deepening(node,depth,alpha,beta,maximizingPlayer)
-    
-    
-    #Procedure Variation Search for better move ordering using the killer heuristic Also known as negascout  
-    
-                        #def score_move_with_pvs(grid, col, mark, config, nsteps)
-
-                        #def pvs(node,depth,alpha,beta,maximizingPlayer)
-        
-    #mtd(f) minimal-window
-    
-                        #def score_move_with_mtdf(grid, col, mark, config, nsteps)
-
-                        #def pvs(node,depth,alpha,beta,maximizingPlayer)
-    
-    #Best-node-search 
-
-                        #def score_move_with_bns(grid, col, mark, config, nsteps)
-
-                        #def bns(node,depth,alpha,beta,maximizingPlayer)
-            
-            
+        return value            
     
     #########################
     # Agent makes selection #
