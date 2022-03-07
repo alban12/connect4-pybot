@@ -8,6 +8,7 @@ def make_sub(weights_path, model_path):
   zipObj = ZipFile('sub.zip', 'w')
   zipObj.write(f'{weights_path}')
   zipObj.write(f'{model_path}')
+  zipObj.close()
   
   
 make_sub()
