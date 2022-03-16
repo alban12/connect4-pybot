@@ -238,7 +238,7 @@ def my_agent(obs, config):
     # Convert the board to a 2D grid
     grid = np.asarray(obs.board).reshape(config.rows, config.columns)
       
-      
+    # TODO : make use of weights from another files
       
     # Make use of the weight of the trained with Monte Carlo network by giving it the grid 
     # my_net = initiliaze the network with the weights 
