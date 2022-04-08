@@ -105,23 +105,6 @@ def my_agent(obs, config):
                         num_windows += 1
         return num_windows
 
-    # Helper function for transposition table : return the zobrist key for a given node 
-    def get_zb_hash(node):
-        zb_hash=0;
-        ts=0;
-        for row in range(6):#range(obs.row)
-            for col in range(7):
-                if(grid[row][col]==1) & (ts==0):
-                    zb_hash+=randomValuesStorage[row][col]
-                    ts+=1
-                elif (grid[row][col]==2) & (ts==0):
-                    zb_hash+=randomValuesStorage[row][7+col]
-                    ts+=1
-                elif (grid[row][col]==1) & (ts>0):
-                    zb_hash=np.bitwise_xor(zb_hash,randomValuesStorage[row][col])
-                elif (grid[row][col]==2) & (ts>0):
-                    zb_hash=np.bitwise_xor(zb_hash,randomValuesStorage[row][7+col])
-        return zb_hash
     
     # Helper function for NegaMax Fast (Transposition table) return the value,flag,depth for a given node if it exist 
     def transpositionTableLookup(node):
@@ -149,85 +132,6 @@ def my_agent(obs, config):
         score = alphabeta(next_grid, nsteps-1, alpha, beta, False, mark, config)#We call alpha-beta to get what Min would do (maximizingPlayer=False)
         return score #The minmax value chosen by the opp 
     
-    #Alpha-Beta Pruning
-    def alphabeta(node,depth,alpha, beta, maximizingPlayer, mark, config):
-        is_terminal = is_terminal_node(node, config)
-        if depth == 0 | is_terminal:
-            return get_heuristic(node,mark,config)
-        valid_moves = [c for c in range(config.columns) if node[0][c] == 0]
-        if maximizingPlayer==True:
-            value=-np.Inf
-            for move in valid_moves: #We get the child of the node by dropping a piece in the allowed columns (valid moves) so we get another grid (game state)
-                node_child=drop_piece(node,move,mark,config)
-                value=max(value,alphabeta(node_child,depth-1,alpha,beta,False,mark,config)) #You have to go the leaf to get the value of alphabeta
-                alpha=max(alpha,value)
-                if alpha>=beta:
-                    break
-            return value
-        else:
-            value=np.Inf
-            for move in valid_moves: #We get the child of the node by dropping a piece in the allowed columns (valid moves) so we get another grid (game state)
-                node_child=drop_piece(node,move,mark%2+1,config)
-                value=min(value,alphabeta(node_child,depth-1,alpha,beta,True,mark,config)) #You have to go the leaf to get the value of alphabeta
-                beta=min(beta,value)
-                if beta<=alpha:
-                    break
-            return value   
-     
-    # Uses negamax fast to calculate value of dropping piece in selected column
-    def score_move_ntt(grid, col, mark, config, nsteps):
-        next_grid = drop_piece(grid, col, mark, config)
-        alpha=-np.Inf 
-        beta=np.Inf
-        score = negamaxwithtt(next_grid, nsteps-1, alpha, beta, False, mark, config) #We call alpha-beta to get what Min would do (maximizingPlayer=False)
-        return score #The minmax value chosen by the opp 
-        
-    #Negamax with Alpha Beta Pruning and transposition table 
-    def negamaxwithtt(node,depth,alpha,beta, maximizingPlayer, mark, config):
-        alphaorigin=alpha
-        
-        #Transposition Table Lookup; node is the lookup key for ttEntry 
-        ttEntry=[None]*3
-        ttEntry = transpositionTableLookup(node)
-        if (ttEntry[0] is not None) & (ttEntry[2]>=depth):
-            if ttEntry[1]=="EXACT":
-                return ttEntry[0]
-            elif ttEntry[1]=="LOWERBOUND":
-                alpha=max(alpha,ttEntry[0])
-            elif ttEntry[1]=="UPPERBOUND":
-                beta=min(beta,ttEntry[0])
-        if alpha>=beta:
-            return ttEntry[0]   
-        
-        is_terminal=is_terminal_node(node,config)
-        
-        if depth == 0 | is_terminal:
-            if is_terminal==True:
-                print(is_terminal)
-            return get_heuristic(node,mark,config)
-        valid_moves = [c for c in range(config.columns) if node[0][c] == 0] #Generate_moves
-        value=-np.Inf
-        for move in valid_moves: #We get the child of the node by dropping the appropriate piece in the allowed columns (valid moves) so we get another grid (game state)
-                player_mark=mark if maximizingPlayer else mark%2+1
-                node_child=drop_piece(node,move,player_mark,config)
-                print("node child")#TO FIX !!!!!!!!!!!!!!!!!!! TO FIX !!!!!!!!!!!!!!!!!!! TO FIX !!!!!!!!!!!!!!!!!!! TO FIX !!!!!!!!!!!!!!!!!!!
-                print(node_child)
-                print(is_terminal_node(node_child,config))
-                value=max(value,-negamaxwithtt(node_child,depth-1,-beta,-alpha,not maximizingPlayer,mark,config))
-                alpha=max(alpha,value)
-                if alpha>=beta:
-                    break
-        #Transposition Table Store; node is the lookup key for ttEntry 
-        ttEntry[0]=value
-        if value<=alphaorigin:
-            ttEntry[1]="UPPERBOUND"
-        elif value>=beta:
-            ttEntry[1]="LOWERBOUND"
-        else:
-            ttEntry[1]="EXACT"
-        ttEntry[2]=depth
-        transpositionTableStore(node, ttEntry)
-        return value            
     
     #########################
     # Agent makes selection #
