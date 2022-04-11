@@ -11,7 +11,6 @@ def my_agent(obs, config):
     # Constant and structures      #
     ################################
     
-    N_STEPS=2
     
     #############     Helper variables for transposition table    #################
     n_random = 2 * 6 * 7 #2 * obs.col * obs.row
@@ -114,10 +113,6 @@ def my_agent(obs, config):
         else:
             return [None,None,-1] #Return -1 for depth by convenience for now 
     
-    # Helper function for NegaMax Fast (Transposition table) return the value,flag,depth for a given node if it exist 
-   #def transpositionTableStore(node, ttEntry):
-    #    zobrist_key=get_zb_hash(node)
-     #   transposition_table[zobrist_key]=ttEntry
     
     
     #########################
