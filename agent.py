@@ -119,13 +119,7 @@ def my_agent(obs, config):
     #        SOLVERS        #
     #########################
     
-    # Uses alpha beta to calculate value of dropping piece in selected column
-    def score_move_ab(grid, col, mark, config, nsteps):
-        next_grid = drop_piece(grid, col, mark, config)#Child of max
-        alpha=-np.Inf
-        beta=np.Inf
-        score = alphabeta(next_grid, nsteps-1, alpha, beta, False, mark, config)#We call alpha-beta to get what Min would do (maximizingPlayer=False)
-        return score #The minmax value chosen by the opp 
+
     
     
     #########################
