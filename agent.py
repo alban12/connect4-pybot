@@ -68,14 +68,6 @@ def my_agent(obs, config):
                     return True
         return False
     
-    # Helper function for minimax: calculates value of heuristic for grid
-    def get_heuristic(grid, mark, config):
-        num_threes = count_windows(grid, 3, mark, config)
-        num_fours = count_windows(grid, 4, mark, config)
-        num_threes_opp = count_windows(grid, 3, mark%2+1, config)
-        num_fours_opp = count_windows(grid, 4, mark%2+1, config)
-        score = num_threes - 1e2*num_threes_opp - 1e5*num_fours_opp + 1e6*num_fours
-        return score
     
     # Helper function for get_heuristic: checks if window satisfies heuristic conditions
     def check_window(window, num_discs, piece, config):
