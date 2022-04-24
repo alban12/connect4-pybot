@@ -104,16 +104,7 @@ def my_agent(obs, config):
             return transposition_table[zobrist_key]
         else:
             return [None,None,-1] #Return -1 for depth by convenience for now 
-    
-    
-    
-    #########################
-    #        SOLVERS        #
-    #########################
-    
-
-    
-    
+ 
     #########################
     # Agent makes selection #
     #########################
