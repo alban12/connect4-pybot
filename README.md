@@ -9,5 +9,3 @@ It makes use of SOTA methods (AlphaZero) that you can check on the notebook.
 
 If you plan to make a submission on the competition, you will need to package the code with the model weights using the `create_submission.py` script. This will build an archive that you can send to the competition.
 
-# Licence
-Apache 2.0
