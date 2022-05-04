@@ -123,9 +123,6 @@ def my_agent(obs, config):
     
     # Use the heuristic to assign a score to each possible board in the next step
     scores = dict(zip(valid_moves, [score_move_ab(grid, col, obs.mark, config, N_STEPS) for col in valid_moves]))    #Alpha_beta choice
-    #scores = dict(zip(valid_moves, [score_move_ntt(grid, col, obs.mark, config, N_STEPS) for col in valid_moves])) #Negamax with TT choice
-    #scores = dict(zip(valid_moves, [score_move_mtdf(grid, col, obs.mark, config, N_STEPS) for col in valid_moves])) # ID
-    #scores = dict(zip(valid_moves, [score_move_mtdf(grid, col, obs.mark, config, N_STEPS) for col in valid_moves])) # Mtdf 
     # Get a list of columns (moves) that maximize the heuristic
     max_cols = [key for key in scores.keys() if scores[key] == max(scores.values())]
     # Select at random from the maximizing columns
