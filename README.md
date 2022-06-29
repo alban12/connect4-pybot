@@ -1,5 +1,5 @@
 # connect4-pybot
-A Python agent for the game connect four.
+A Python agent for the game connect four based on the GYM kaggle env.
 
 # Usage 
 
